@@ -1,232 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renewal Tracker Dashboard</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <style>
-        :root {
-            --bg-dark: #1a1d23;
-            --surface-dark: #2d3139;
-            --primary: #008060;
-            --text-light: #f5f5f7;
-        }
-
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-light);
-            margin: 0;
-            padding: 20px;
-            overflow-x: auto;
-        }
-
-        .board {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
-            min-width: 1200px;
-            padding: 40px 0;
-        }
-
-        .stage {
-            min-height: 80vh;
-            background: var(--surface-dark);
-            border-radius: 8px;
-            padding: 20px;
-            position: relative;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .stage.drop-target {
-            background: #363b44;
-        }
-
-        .postit {
-            width: 220px;
-            min-height: 160px;
-            padding: 20px;
-            margin: 15px;
-            position: absolute;
-            cursor: grab;
-            border-radius: 8px;
-            background: var(--surface-dark);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .postit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-        }
-
-        .stage-title {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 1.1em;
-            margin-bottom: 20px;
-            position: sticky;
-            top: 0;
-            background: var(--surface-dark);
-            padding: 12px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            justify-content: center;
-        }
-
-        .controls {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--surface-dark);
-            padding: 12px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            display: flex;
-            gap: 10px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        button {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 6px;
-            background: var(--primary);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        .country-flag {
-            font-size: 1.4em;
-            margin-right: 8px;
-        }
-
-        .renewal-date {
-            color: #8a8f98;
-            font-size: 0.9em;
-            margin-top: 8px;
-        }
-
-        input[type="file"] {
-            color: var(--text-light);
-        }
-    </style>
+    <!-- Keep the same CSS -->
 </head>
 <body>
-    <div class="controls">
-        <input type="file" id="csvInput" accept=".csv">
-        <button onclick="saveState()">💾 Save</button>
-        <button onclick="exportCSV()">📤 Export</button>
-    </div>
+    <!-- Same control panel -->
+    <div class="controls">[...]</div>
 
-    <div class="board">
-        <div class="stage" data-stage="1">
-            <div class="stage-title">📅 Pre-Renewal/Strategy</div>
-        </div>
-        <div class="stage" data-stage="2">
-            <div class="stage-title">📝 Decisions</div>
-        </div>
-        <div class="stage" data-stage="3">
-            <div class="stage-title">🚀 Implementation</div>
-        </div>
-        <div class="stage" data-stage="4">
-            <div class="stage-title">📊 Execution</div>
-        </div>
-        <div class="stage" data-stage="5">
-            <div class="stage-title">🛠️ Hyper Care</div>
-        </div>
-    </div>
+    <!-- Same board structure -->
+    <div class="board">[...]</div>
 
     <script>
-        const countries = [
-            { name: "Australia", flag: "🇦🇺", renewalDate: "6/1/25" },
-            { name: "US", flag: "🇺🇸", renewalDate: "1/1/26" },
-            { name: "Singapore", flag: "🇸🇬", renewalDate: "5/1/25" }
-        ];
-
+        // SIMPLIFIED TEST DATA
         let milestones = [
-            { id: 1, title: "Market Research", stage: 1 },
-            { id: 2, title: "Client Approval", stage: 1 },
-            { id: 3, title: "Prototype Development", stage: 2 },
-            { id: 4, title: "Testing Phase", stage: 3 }
+            {
+                title: "Test Milestone",
+                stage: 1,
+                country: "Test Country",
+                flag: "🇺🇸",
+                renewalDate: "1/1/25",
+                left: 10,
+                top: 10
+            }
         ];
 
-        // Assign countries randomly
-        milestones = milestones.map(milestone => {
-            const randomCountry = countries[Math.floor(Math.random() * countries.length)];
-            return {
-                ...milestone,
-                country: randomCountry.name,
-                flag: randomCountry.flag,
-                renewalDate: randomCountry.renewalDate
-            };
-        });
-
-        // Initialize from localStorage
-        function loadState() {
-            const saved = localStorage.getItem('boardState');
-            if (saved) milestones = JSON.parse(saved);
-            initBoard();
+        // SIMPLIFIED INIT
+        function initBoard() {
+            console.log("Initializing board with:", milestones);
+            const stage = document.querySelector('.stage[data-stage="1"]');
+            const postIt = createPostIt(milestones[0]);
+            stage.appendChild(postIt);
         }
 
-        // CSV Import/Export functions... (same as previous version)
-
+        // BASIC POST-IT CREATION
         function createPostIt(milestone) {
             const postIt = document.createElement('div');
             postIt.className = 'postit';
-            postIt.dataset.stage = milestone.stage;
-            postIt.style.left = milestone.left + '%';
-            postIt.style.top = milestone.top + '%';
-            
             postIt.innerHTML = `
-                <div>
-                    <span class="country-flag">${milestone.flag}</span>
-                    <h3>${milestone.country}</h3>
-                    <div class="renewal-date">Renewal: ${milestone.renewalDate}</div>
-                </div>
-                <div>
-                    <small>${milestone.title}</small>
-                    ${milestone.decision ? `<div class="decision-note">${milestone.decision}</div>` : ''}
-                </div>
+                <div>${milestone.flag} ${milestone.country}</div>
+                <div>${milestone.renewalDate}</div>
             `;
-
-            makeDraggable(postIt, milestone);
+            postIt.style.left = `${milestone.left}%`;
+            postIt.style.top = `${milestone.top}%`;
             return postIt;
         }
 
-        // Rest of the JavaScript remains the same as previous version...
-        // (Drag functionality, stage handling, etc.)
-
-        function initBoard() {
-            const stages = document.querySelectorAll('.stage');
-            stages.forEach(stage => stage.innerHTML = '<div class="stage-title">' + 
-                stage.querySelector('.stage-title').innerHTML + '</div>');
-
-            milestones.forEach(milestone => {
-                const stage = document.querySelector(`.stage[data-stage="${milestone.stage}"]`);
-                if (stage) {
-                    const postIt = createPostIt(milestone);
-                    stage.appendChild(postIt);
-                }
-            });
-        }
-
-        loadState();
+        // START FRESH
+        localStorage.clear();
+        initBoard();
     </script>
 </body>
 </html>
